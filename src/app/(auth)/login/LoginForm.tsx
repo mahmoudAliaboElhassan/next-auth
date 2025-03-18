@@ -1,10 +1,10 @@
 "use client";
 
+import { useState } from "react";
+
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-
 import { IoMdLogIn } from "react-icons/io";
-import { useState } from "react";
 import { loginAction } from "@/app/actions/login";
 
 function LoginForm() {
@@ -52,3 +52,6 @@ function LoginForm() {
 }
 
 export default LoginForm;
+
+// installing prisma and @prisma/client
+// npx prisma init

@@ -17,6 +17,7 @@ function RegisterForm() {
     e.preventDefault();
     console.log("from client ", email, password, userName);
     signUpAction(userName, email, password);
+    setUserName(""); // clear the input
     setEmail(""); // clear the input
     setPassword(""); // clear the input
   };
