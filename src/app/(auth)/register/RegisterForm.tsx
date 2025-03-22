@@ -12,11 +12,21 @@ function RegisterForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
+  const [loading,setLoading]=useState<boolean>(false)
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log("from client ", email, password, userName);
-    signUpAction(userName, email, password);
+    signUpAction(userName, email, password).then((result) => {
+      setLoading(true)
+      if (result?.success) {
+        alert(result.message);
+        setLoading(false)
+      } else {
+        alert(result?.message);
+        setLoading(false)
+      }
+    });
     setUserName(""); // clear the input
     setEmail(""); // clear the input
     setPassword(""); // clear the input
@@ -48,6 +58,8 @@ function RegisterForm() {
       <button
         type="submit"
         className="bg-blue-500 text-white p-2 rounded-md w-full mt-2"
+        style={{cursor:"pointer"}}
+        disabled={loading}
       >
         <BsPersonPlus />
         SignUp
