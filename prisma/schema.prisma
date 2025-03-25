@@ -52,8 +52,7 @@ model User {
 // passwor and email is optional as user can regiser by google github 
 
 
-
-// npx migrate dev 
-// or npx prisma generate npx prisma db push
+// npx prisma generate
+// npx migrate dev or  npx prisma db push
 // transform models to database tables
 // and open it from pgAdmin

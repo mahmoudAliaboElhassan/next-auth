@@ -1,8 +1,15 @@
 import Link from "next/link";
 import React from "react";
 import LoginForm from "./LoginForm";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
-function Login() {
+async function Login() {
+  const session = await auth();
+  if (session) {
+    // Redirect to profile page if user is already logged in
+    redirect("/profile");
+  }
   return (
     <div>
       <section className="w-2/5">

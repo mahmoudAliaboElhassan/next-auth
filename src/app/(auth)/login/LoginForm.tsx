@@ -14,7 +14,14 @@ function LoginForm() {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log("from client ", email, password);
-    loginAction(email, password);
+    loginAction(email, password).then((data) => {
+      if (!data.success) {
+        alert(data.message);
+        return;
+      }
+      alert(data.message);
+    });
+
     setEmail(""); // clear the input
     setPassword(""); // clear the input
   };
