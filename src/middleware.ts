@@ -1,14 +1,22 @@
-import { auth as middleware } from "@/auth"; // Ensure this is the NextAuth auth function
-import { NextRequest, NextResponse } from "next/server";
+import authConfig from "./auth.config";
+import NextAuth from "next-auth";
 
-export default middleware((req: any) => {
+import { NextResponse } from "next/server";
+const { auth: middleware } = NextAuth(authConfig);
+
+const authRoutes = ["/login", "/register"];
+const protectedRoutes = ["/profile"];
+
+export default middleware((req) => {
   const { pathname } = req.nextUrl;
-  const authRoutes = ["/login", "/register", "/profile"];
   const isUsserLoogedIn = Boolean(req.auth);
   console.log("req", req);
   console.log("auth", middleware);
   if (authRoutes.includes(pathname) && isUsserLoogedIn) {
     return NextResponse.redirect(new URL("/profile", req.nextUrl));
+  }
+  if (protectedRoutes.includes(pathname) && !isUsserLoogedIn) {
+    return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 });
 
@@ -17,5 +25,3 @@ export const config = {
     // "/login", "/register", "/profile"
   ],
 };
-
-// age run time
