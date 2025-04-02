@@ -7,7 +7,9 @@ export async function loginAction(email: string, password: string) {
   try {
     console.log("email from server", email);
     console.log("password from server", password);
-    await signIn("credentials", { email, password, redirectTo: "/profile" });
+    // await signIn("credentials", { email, password, redirectTo: "/profile" });
+    await signIn("credentials", { email, password });
+    // i redirect for redirect callback
   } catch (error) {
     console.log("error", error);
     if (error instanceof AuthError) {

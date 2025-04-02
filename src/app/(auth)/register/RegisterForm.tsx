@@ -3,7 +3,7 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
-import { IoMdLogIn } from "react-icons/io";
+// import { IoMdLogIn } from "react-icons/io";
 import { BsPersonPlus } from "react-icons/bs";
 import { useState } from "react";
 import { signUpAction } from "@/app/actions/signup";
@@ -14,7 +14,7 @@ function RegisterForm() {
   const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("from client ", email, password, userName);
     signUpAction(userName, email, password).then((result) => {
@@ -75,3 +75,7 @@ function RegisterForm() {
 }
 
 export default RegisterForm;
+
+// we make npm run build
+// then npm start
+// problem is host not trusted
