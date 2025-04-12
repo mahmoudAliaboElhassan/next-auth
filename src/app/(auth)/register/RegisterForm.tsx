@@ -7,6 +7,7 @@ import { FaGithub } from "react-icons/fa";
 import { BsPersonPlus } from "react-icons/bs";
 import { useState } from "react";
 import { signUpAction } from "@/app/actions/signup";
+import SocialProviders from "@/app/components/SocialProviders";
 
 function RegisterForm() {
   const [email, setEmail] = useState("");
@@ -64,12 +65,7 @@ function RegisterForm() {
         <BsPersonPlus />
         SignUp
       </button>
-      <div className="flex justify-between mt-2">
-        <FcGoogle className="text-red-500" size={30} />{" "}
-      </div>
-      <div className="flex justify-between mt-2">
-        <FaGithub className="text-black" size={30} />{" "}
-      </div>
+      <SocialProviders />
     </form>
   );
 }

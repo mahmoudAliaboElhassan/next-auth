@@ -21,7 +21,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // like user id or other properties
       if (session.user && token.sub) {
         session.user.id = token.sub;
+        const user = await prisma.user.findUnique({ where: { id: token.sub } });
+        if (user) {
+          session.user.role = user.role;
+        }
       }
+      session.user.image = token.picture; // here we can add custom properties to session object
       // here we can add custom properties to session object
       return session;
     },
@@ -32,6 +37,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       else {
         return baseUrl; // Default to home page if redirect URL is external
       }
+    },
+  },
+  events: {
+    async linkAccount({ user, account, profile }) {
+      console.log("user form events", user);
+      await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          emailVerified: new Date(),
+        },
+      });
     },
   },
   adapter: PrismaAdapter(prisma),

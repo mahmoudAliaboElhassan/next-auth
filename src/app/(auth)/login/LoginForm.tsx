@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 
-import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
 import { IoMdLogIn } from "react-icons/io";
 import { loginAction } from "@/app/actions/login";
+import SocialProviders from "@/app/components/SocialProviders";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -48,12 +47,7 @@ function LoginForm() {
         <IoMdLogIn />
         Login
       </button>
-      <div className="flex justify-between mt-2">
-        <FcGoogle className="text-red-500" size={30} />{" "}
-      </div>
-      <div className="flex justify-between mt-2">
-        <FaGithub className="text-black" size={30} />{" "}
-      </div>
+      <SocialProviders />
     </form>
   );
 }

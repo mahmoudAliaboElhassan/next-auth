@@ -1,0 +1,12 @@
+// typescript declaration
+import NextAuth, { type DefaultSession } from "next-auth";
+import { Role } from "@prisma/client";
+
+declare module "next-auth" {
+  interface Session {
+    user: DefaultSession["user"] & { role: Role };
+  }
+}
+
+// In TypeScript, a file with the .d.ts extension is a "declaration file".
+// Define types for external libraries (like express, lodash, next-auth, etc.).
