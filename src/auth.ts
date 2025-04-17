@@ -38,6 +38,31 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return baseUrl; // Default to home page if redirect URL is external
       }
     },
+    // it is as layer of security
+    // next auth will not make user that is not verified to login
+    async signIn({ user, account }) {
+      // signIn here works for every login providers or credentials
+      // return true; // make user login
+      // // return false will not be able to login and will throw execption
+
+      if (account?.provider !== "credentials") {
+        return true;
+        // make github google provider login
+      }
+
+      console.log("User form callback", user);
+
+      const userFromDb = await prisma.user.findUnique({
+        where: { id: user.id },
+      });
+
+      if (!userFromDb?.emailVerified) {
+        console.log("User from db", userFromDb);
+        return false;
+      } else {
+        return true;
+      }
+    },
   },
   events: {
     async linkAccount({ user, account, profile }) {

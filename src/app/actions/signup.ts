@@ -2,6 +2,9 @@
 
 import { prisma } from "@/utils/prisma";
 import * as bcrypt from "bcryptjs";
+import { generateVerificationToken } from "@/utils/generateToken";
+import { sendVerificationToken } from "@/mail";
+
 export async function signUpAction(
   userName: string,
   email: string,
@@ -22,11 +25,17 @@ export async function signUpAction(
     await prisma.user.create({
       data: { name: userName, email, password: hashed },
     });
-
+    const verifiacationToken = await generateVerificationToken(email);
+    console.log("verifiacationToken", verifiacationToken);
+    // send email
+    await sendVerificationToken(email, verifiacationToken.token);
     console.log("user name from server", userName);
     console.log("email from server", email);
     console.log("password from server", password);
-    return { success: true, message: "User Created Successfully" };
+    return {
+      success: true,
+      message: "Email Sent Successfully Verify your email inbox",
+    };
   } catch (error) {
     console.log("Error", error);
   }
