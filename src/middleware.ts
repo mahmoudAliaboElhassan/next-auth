@@ -4,7 +4,13 @@ import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
 const { auth: middleware } = NextAuth(authConfig);
 
-const authRoutes = ["/login", "/register"];
+const authRoutes = [
+  "/login",
+  "/register",
+  "/verify",
+  "/forgot-password",
+  "reset-password",
+];
 const protectedRoutes = ["/profile"];
 
 export default middleware((req) => {
@@ -22,6 +28,6 @@ export default middleware((req) => {
 
 export const config = {
   matcher: [
-    // "/login", "/register", "/profile"
+    // "/login", "/register", "/profile","/verify","/forgot-password","reset-password
   ],
 };

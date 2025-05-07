@@ -20,3 +20,24 @@ export const generateVerificationToken = async (email: string) => {
   });
   return newVerficationToken;
 };
+
+// generate reset password token
+export const generateForgotPasswordToken = async (email: string) => {
+  const resetPasswordToken = await prisma.resetPasswordToken.findFirst({
+    where: { email },
+  });
+  if (resetPasswordToken) {
+    await prisma.resetPasswordToken.delete({
+      where: { id: resetPasswordToken.id },
+    });
+  }
+  const newResetPasswordToken = await prisma.resetPasswordToken.create({
+    data: {
+      token: randomUUID(), // give me userid random string
+      expires: new Date(new Date().getTime() + 3600 * 2 * 1000),
+      email,
+      //   2 hours of expiration
+    },
+  });
+  return newResetPasswordToken;
+};

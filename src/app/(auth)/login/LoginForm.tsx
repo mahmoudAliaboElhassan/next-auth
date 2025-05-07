@@ -5,6 +5,7 @@ import { useState } from "react";
 import { IoMdLogIn } from "react-icons/io";
 import { loginAction } from "@/app/actions/login";
 import SocialProviders from "@/app/components/SocialProviders";
+import Link from "next/link";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -48,6 +49,12 @@ function LoginForm() {
         Login
       </button>
       <SocialProviders />
+
+      <div>
+        <Link className="underline text-[blue]" href="forgot-password">
+          forgot password{" "}
+        </Link>
+      </div>
     </form>
   );
 }
