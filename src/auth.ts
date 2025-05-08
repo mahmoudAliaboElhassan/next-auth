@@ -24,6 +24,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const user = await prisma.user.findUnique({ where: { id: token.sub } });
         if (user) {
           session.user.role = user.role;
+          session.user.isTwoStepEnableds = user.isTwoStepEnabled;
         }
       }
       session.user.image = token.picture; // here we can add custom properties to session object

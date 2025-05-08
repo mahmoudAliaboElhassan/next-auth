@@ -36,14 +36,16 @@ model Account {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  password      String?
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  role          Role      @default(USER)
-  accounts      Account[]
+  id                  String                    @id @default(cuid())
+  name                String?
+  email               String?                   @unique
+  password            String?
+  emailVerified       DateTime?                 @map("email_verified")
+  image               String?
+  role                Role                      @default(USER)
+  accounts            Account[]
+  twoStepConfirmation TwoStepConfirmationToken?
+  isTwoStepEnabled    Boolean                   @default(false)
   // sessions      Session[]
 
   @@map("users")
@@ -57,6 +59,7 @@ model VerificationToken {
 
   @@unique([email, token])
 }
+
 model ResetPasswordToken {
   id      String   @id @default(cuid())
   email   String
@@ -64,6 +67,21 @@ model ResetPasswordToken {
   expires DateTime
 
   @@unique([email, token])
+}
+
+model TwoStepToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoStepConfirmationToken {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 // passwor and email is optional as user can regiser by google github 
