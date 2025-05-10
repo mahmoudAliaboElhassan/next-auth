@@ -60,9 +60,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (!userFromDb?.emailVerified) {
         console.log("User from db", userFromDb);
         return false;
-      } else {
-        return true;
       }
+      if (userFromDb.isTwoStepEnabled) {
+        const twoStepConfirmation =
+          await prisma.twoStepConfirmationToken.findUnique({
+            where: { userId: user.id },
+          });
+        if (!twoStepConfirmation) {
+          return false;
+        }
+        await prisma.twoStepConfirmationToken.delete({
+          where: { id: twoStepConfirmation.id },
+        });
+      }
+      return true;
     },
   },
   events: {

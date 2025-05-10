@@ -24,3 +24,13 @@ export const sendForgotPassworToken = async (email: string, token: string) => {
       </div>`,
   });
 };
+export const sendTwoStepToken = async (email: string, token: string) => {
+  await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: email,
+    subject: "Two Step Code",
+    html: `<div>
+ <h1> Code :${token}</h1>
+    </div>`,
+  });
+};
